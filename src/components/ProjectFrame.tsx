@@ -58,6 +58,7 @@ export function ProjectFrame({
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
             transition={{ delay: 0.3, duration: 0.8 }}
             className="text-center max-w-2xl z-10"
           >
@@ -77,6 +78,7 @@ export function ProjectFrame({
         <motion.div
           initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
           animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: isLeft ? -50 : 50 }}
           transition={{ delay: 0.3, duration: 0.8 }}
           className={`space-y-6 z-10 ${isLeft ? '' : 'lg:order-2'}`}
         >
@@ -96,7 +98,7 @@ export function ProjectFrame({
       initial={{ y: '100%' }}
       animate={{ y: 0 }}
       exit={{ y: '-100%' }}
-      transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
+      transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
       className={`fixed inset-0 w-full h-screen overflow-hidden flex items-center justify-center ${getThemeClasses()}`}
       onMouseMove={handleMouseMove}
     >

@@ -12,6 +12,8 @@ export default function App() {
 
   const handleExplore = () => {
     setShowTransition(true);
+    // Enable scrolling when entering projects
+    document.body.style.overflow = 'auto';
     setTimeout(() => {
       setShowTransition(false);
       setShowContent(true);
@@ -79,17 +81,37 @@ export default function App() {
         // Scroll down
         setIsScrolling(true);
         setCurrentProject(prev => prev + 1);
-        setTimeout(() => setIsScrolling(false), 800);
+        setTimeout(() => setIsScrolling(false), 600);
       } else if (e.deltaY < 0 && currentProject > 0) {
         // Scroll up
         setIsScrolling(true);
         setCurrentProject(prev => prev - 1);
-        setTimeout(() => setIsScrolling(false), 800);
+        setTimeout(() => setIsScrolling(false), 600);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isScrolling) return;
+
+      if ((e.key === 'ArrowDown' || e.key === 'PageDown') && currentProject < projects.length - 1) {
+        e.preventDefault();
+        setIsScrolling(true);
+        setCurrentProject(prev => prev + 1);
+        setTimeout(() => setIsScrolling(false), 600);
+      } else if ((e.key === 'ArrowUp' || e.key === 'PageUp') && currentProject > 0) {
+        e.preventDefault();
+        setIsScrolling(true);
+        setCurrentProject(prev => prev - 1);
+        setTimeout(() => setIsScrolling(false), 600);
       }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: true });
-    return () => window.removeEventListener('wheel', handleWheel);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [showContent, currentProject, isScrolling, projects.length]);
 
   return (
